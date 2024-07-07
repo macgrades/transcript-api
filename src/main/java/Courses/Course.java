@@ -2,7 +2,7 @@ package Courses;
 
 public class Course {
 
-    private String code;
+    private String code = "Unrecognized Course";
     private String units;
     private String grade;
 

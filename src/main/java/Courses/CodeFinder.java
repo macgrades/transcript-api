@@ -18,6 +18,6 @@ public class CodeFinder {
     }
 
     public String getCourse() {
-        return line.substring(matcher.start(), matcher.end());
+        return line.substring(matcher.start(), matcher.end()).trim();
     }
 }

@@ -2,12 +2,12 @@ package Courses;
 
 public class CourseFactory {
 
-    private boolean codeFound = false;
+    //private boolean codeFound = false;
     private boolean unitsFound = false;
     private boolean gradeFound = false;
     private Course course = new Course();
 
-    public boolean isCourseBuilt() { return codeFound && unitsFound && gradeFound; }
+    public boolean isCourseBuilt() { return /*codeFound &&*/ unitsFound && gradeFound; }
     public Course getCourse() {
         Course result = course;
         resetFactory();
@@ -15,30 +15,29 @@ public class CourseFactory {
     }
 
     public void buildCourse(String line) {
-        CodeFinder cFinder = new CodeFinder(line);
-        if (cFinder.containsCourse()) {
-            if (codeFound) {
-                resetFactory();
-            }
-            course.setCode(cFinder.getCourse());
-            codeFound = true;
-        }
 
         UnitFinder uFinder = new UnitFinder(line);
-        if (uFinder.containsUnits() && !unitsFound && codeFound) {
+        if (uFinder.containsUnits()) {
+            gradeFound = false;
             course.setUnits(uFinder.getUnits());
             unitsFound = true;
         }
 
+        CodeFinder cFinder = new CodeFinder(line);
+        if (cFinder.containsCourse()) {
+            course.setCode(cFinder.getCourse());
+            //codeFound = true;
+        }
+
         GradeFinder gFinder = new GradeFinder();
-        if (gFinder.containsGrade(line) && !gradeFound && codeFound) {
+        if (gFinder.containsGrade(line)) {
             course.setGrade(gFinder.getGrade(line));
             gradeFound = true;
         }
     }
 
     private void resetFactory() {
-        codeFound = false;
+        //codeFound = false;
         unitsFound = false;
         gradeFound = false;
         course = new Course();
